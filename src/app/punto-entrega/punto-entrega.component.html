@@ -1,0 +1,71 @@
+<div class="p-5 bg-light w-75">
+  <h3>PUNTO DE ENTREGA</h3>
+  <br />
+  <div class="container" *ngIf="!creacionedicion">
+    <div class="card mb-3 p-3">
+      <div class="card-body">
+        <table class="table table-bordered table-striped table-hover">
+          <thead class="text-center">
+            <tr>
+              <th>ID</th>
+              <th>NOMBRE</th>
+              <th>DIRECCION</th>
+              <th>ACCION</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tipo of puntoEntregas">
+              <td>{{ tipo.idPuntoEntrega }}</td>
+              <td>{{ tipo.nombre }}</td>
+              <td>{{ tipo.direccion }}</td>
+              <td class="text-center">
+                <button type="button" class="btn btn-success btn-sm m-2" (click)="editar(tipo)">Editar</button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="eliminar(tipo)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary float-end" (click)="nuevo()">Nuevo</button>  <br />
+  </div>
+  <div class="container" *ngIf="creacionedicion">
+    <div class="card mb-3 p-3">
+      <div class="card-body">
+        <form [formGroup]="formPuntoEntrega">
+          <div class="row">
+            <div class="form-group col-md-2">
+              <label for="idPuntoEntrega" class="form-label">ID</label>
+              <input type="text" class="form-control" formControlName="idPuntoEntrega">
+            </div>
+            <div class="form-group col-md-5">
+              <label for="tipoLogistica" class="form-label">Tipo de Logística</label>
+              <select #selectLogistica class="form-select col-md-5" formControlName="tipoLogistica" (change)="onChange(selectLogistica.value)">
+                <option *ngFor="let item of tipoLogisticas" [ngValue]="item.idTipoLogistica">{{item.descripcion}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-5">
+              <label for="tipoPuntoEntrega" class="form-label">Tipo de Punto de Entrega</label>
+              <select class="form-select col-md-5" formControlName="tipoPuntoEntrega">
+                <option *ngFor="let item of tipoPuntoEntregasFiltrado" [ngValue]="item.idTipoPuntoEntrega">{{item.descripcion}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" formControlName="nombre">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="direccion" class="form-label">Dirección</label>
+              <input type="text" class="form-control" formControlName="direccion">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <button type="button" class="btn btn-success float-end m-1" (click)="guardar()" [disabled]="!formPuntoEntrega.valid">Guardar</button>
+    <button type="button" class="btn btn-primary float-end m-1" (click)="cancelar()">Cancelar</button><br />
+  </div>
+</div>
+

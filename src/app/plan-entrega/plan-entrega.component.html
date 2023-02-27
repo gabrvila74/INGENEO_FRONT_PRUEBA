@@ -1,0 +1,115 @@
+<div class="p-5 bg-light ">
+  <h3>PLAN DE ENTREGA</h3>
+  <br />
+  <div class="container" *ngIf="!creacionedicion">
+    <div class="card mb-3 p-3">
+      <div class="card-body">
+        <table class="table table-bordered table-striped table-hover">
+          <thead class="text-center">
+            <tr>
+              <th>ID</th>
+              <th>FECHA REGISTRO</th>
+              <th>PRECIO ENVIO</th>
+              <th>CANTIDAD DEL PRODUCTO</th>
+              <th>ACCION</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of planEntregas">
+              <td>{{ item.idPlanEntrega }}</td>
+              <td>{{ item.fechaRegistro | date: 'dd/MM/YYYY'}}</td>
+              <td>{{ item.precioEnvio }}</td>
+              <td>{{ item.cantidadProducto }}</td>
+              <td class="text-center">
+                <button type="button" class="btn btn-success btn-sm m-2" (click)="editar(item)">Editar</button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="eliminar(item)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary float-end" (click)="nuevo()">Nuevo</button>  <br />
+  </div>
+  <div class="container" *ngIf="creacionedicion">
+    <div class="card mb-3 p-3">
+      <div class="card-body">
+        <form [formGroup]="formPlanEntrega">
+          <div class="row">
+            <div class="form-group col-md-2">
+              <label for="idPlanEntrega" class="form-label">ID</label>
+              <input type="text" class="form-control" formControlName="idPlanEntrega">
+            </div>
+            <div class="form-group col-md-5">
+              <label for="tipoLogistica" class="form-label">Tipo de Logística</label>
+              <select #selectLogistica class="form-select col-md-5" formControlName="tipoLogistica" (change)="onChangeLogistica(selectLogistica.value)">
+                <option *ngFor="let item of tipoLogisticas" [ngValue]="item.idTipoLogistica">{{item.descripcion}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-5">
+              <label for="tipoProducto" class="form-label">Tipo de Producto</label>
+              <select  class="form-select col-md-5" formControlName="tipoProducto" >
+                <option *ngFor="let item of tipoProductosFiltrado" [ngValue]="item.idTipoProducto">{{item.descripcion}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-4">
+              <label for="tipoPuntoEntrega" class="form-label">Tipo de Punto de Entrega</label>
+              <select #selectTipoPuntoEntrega class="form-select col-md-4" formControlName="tipoPuntoEntrega" (change)="onChangeTipoPuntoEntrega(selectTipoPuntoEntrega.value)">
+                <option *ngFor="let item of tipoPuntoEntregasFiltrado" [ngValue]="item.idTipoPuntoEntrega">{{item.descripcion}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="puntoEntrega" class="form-label">Punto de Entrega</label>
+              <select class="form-select col-md-4" formControlName="puntoEntrega">
+                <option *ngFor="let item of puntoEntregasFiltrado" [ngValue]="item.idPuntoEntrega">{{item.nombre}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="cliente" class="form-label">Cliente</label>
+              <select class="form-select col-md-4" formControlName="cliente">
+                <option *ngFor="let item of clientes" [ngValue]="item.idCliente">{{item.nombre}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-3">
+              <label for="cantidad" class="form-label">Cantidad del Producto</label>
+              <input type="number" class="form-control" formControlName="cantidad" #cantidadProd (keyup)="onChangeCantidad(cantidadProd.value)">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="fechaRegistro" class="form-label">Fecha de Registro</label>
+              <input type="text" class="form-control" formControlName="fechaRegistro" bsDatepicker readonly [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="fechaEnvio" class="form-label">Fecha de Entrega</label>
+              <input type="text" class="form-control" formControlName="fechaEnvio" bsDatepicker readonly [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="precioEnvio" class="form-label">Precio de Envío</label>
+              <input type="number" class="form-control" formControlName="precioEnvio">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-3">
+              <label for="porcDescuento" class="form-label">Porcentaje de Descuento</label>
+              <input type="number" class="form-control" formControlName="porcDescuento" readonly>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="numeroGuia" class="form-label">Número de Guía</label>
+              <input type="text" class="form-control" formControlName="numeroGuia">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="identTransporte" class="form-label">Identificación del Transporte</label>
+              <input type="text" class="form-control" formControlName="identTransporte">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <button type="button" class="btn btn-success float-end m-1" (click)="guardar()" [disabled]="!formPlanEntrega.valid">Guardar</button>
+    <button type="button" class="btn btn-primary float-end m-1" (click)="cancelar()">Cancelar</button><br />
+  </div>
+</div>
+

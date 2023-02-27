@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\cliente",
+    "\\src\\app\\nav",
+    "\\src\\app\\plan-entrega",
+    "\\src\\app\\punto-entrega",
+    "\\src\\app\\tipo-producto",
+    "\\src\\app\\_models",
+    "\\src\\app\\_services"
+  ],
+  "SelectedNode": "\\src\\index.html",
+  "PreviewInSolutionExplorer": false
+}
